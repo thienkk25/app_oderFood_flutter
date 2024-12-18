@@ -1,11 +1,14 @@
 # Hướng dẫn
 
-1. Tải mã nguồn từ repository.
+1. Tải mã nguồn từ repository:
     ```bash
     git clone https://github.com/thienkk25/app_oderFood_flutter.git
     ```
-
-2. Cần chuẩn bị thiết lập dịch vụ Firebase vào dự án
+    - Chạy lệch terminal để đảm bảo mã nguồn, thư viện:
+      ```bash
+      flutter pub get
+      ```
+2. Cần chuẩn bị thiết lập dịch vụ Firebase vào dự án:
 
     - [Hướng dẫn setup Firebase](https://firebase.google.com/docs/flutter/setup?platform=android "Chi tiết tại đây")
 
