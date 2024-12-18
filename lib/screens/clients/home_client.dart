@@ -105,8 +105,6 @@ class _HomeClientState extends State<HomeClient> {
                                     fit: BoxFit.cover,
                                   ),
                                 ))));
-
-                        controller.clear();
                       },
                     ),
                   );
