@@ -18,8 +18,6 @@ class _HomeClientState extends State<HomeClient> {
   late Future<void> _loadFoodFuture;
   late FirebaseApp app;
   late FirebaseDatabase databaseReference;
-  final TextEditingController _searchTextEditingController =
-      TextEditingController();
   final _searchController = SearchController();
   @override
   void initState() {
@@ -238,8 +236,24 @@ class _GridtitleViewState extends State<GridtitleView> {
                   style: TextButton.styleFrom(
                       backgroundColor:
                           const Color.fromARGB(255, 124, 124, 105)),
-                  onPressed: () =>
-                      callFood("Món: ${widget.name}, giá: \$ ${widget.price}"),
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                              title: const Text("Bạn chắc chắn gọi?"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Không")),
+                                TextButton(
+                                    onPressed: () {
+                                      callFood(
+                                          "Món: ${widget.name}, giá: \$ ${widget.price}");
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text("Xác nhận")),
+                              ])),
                   label: const Text(
                     "Gọi món",
                     style: TextStyle(color: Colors.white),
