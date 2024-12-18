@@ -126,8 +126,9 @@ class _HomeClientState extends State<HomeClient> {
                           itemCount: items.length,
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 1,
+                            crossAxisCount: 2,
                             crossAxisSpacing: 5,
+                            mainAxisSpacing: 5,
                           ),
                           itemBuilder: (context, index) {
                             final item = items[index];

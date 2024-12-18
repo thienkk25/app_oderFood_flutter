@@ -61,6 +61,7 @@
     - Danh sách người dùng gọi món thời gian thực
   - Quyền người dùng:
     - Hiện thị danh sách đồ ăn có ảnh
+    - Tìm kiếm món ăn và có ảnh icon
     - Gọi món
 8. Thực hiện kiểm thử tự động và xem kết quả:
     ```bash

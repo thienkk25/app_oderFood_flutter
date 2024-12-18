@@ -37,23 +37,33 @@ class _HomeState extends State<Home> {
       ),
       drawer: Drawer(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                "Bảng điều khiển",
-                style: TextStyle(fontSize: 24),
-              ),
+            Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    "Bảng điều khiển",
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+                ListTile(title: Text("Thông tin: $_userEmail")),
+                ListTile(
+                  leading: const Icon(Icons.lock),
+                  title: const Text("Đổi mật khẩu"),
+                  onTap: _showChangePasswordDialog,
+                ),
+              ],
             ),
-            ListTile(title: Text("Thông tin: $_userEmail")),
-            ListTile(
-              title: const Text("Đổi mật khẩu"),
-              onTap: _showChangePasswordDialog,
-            ),
-            ListTile(
-              title: const Text('Đăng xuất'),
-              onTap: _showLogoutDialog,
+            Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Đăng xuất'),
+                  onTap: _showLogoutDialog,
+                ),
+              ],
             ),
           ],
         ),
