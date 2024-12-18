@@ -47,7 +47,6 @@ app.*.map.json
 /ios/Flutter
 
 pubspec.lock
-pubspec.yaml
 
 /android/app/google-services.json
 firebase.json
