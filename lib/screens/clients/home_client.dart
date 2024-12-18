@@ -18,6 +18,9 @@ class _HomeClientState extends State<HomeClient> {
   late Future<void> _loadFoodFuture;
   late FirebaseApp app;
   late FirebaseDatabase databaseReference;
+  final TextEditingController _searchTextEditingController =
+      TextEditingController();
+  final _searchController = SearchController();
   @override
   void initState() {
     _loadFoodFuture = getAllFood();
@@ -32,6 +35,7 @@ class _HomeClientState extends State<HomeClient> {
       app: app,
       databaseURL:
           "https://oderfood2525-default-rtdb.asia-southeast1.firebasedatabase.app/",
+      // "<link_your_databaseURL>",
     );
     setState(() {}); // Trigger rebuild after Firebase initialization
   }
@@ -46,64 +50,134 @@ class _HomeClientState extends State<HomeClient> {
         height: double.infinity,
         fit: BoxFit.fill,
       ),
-      RefreshIndicator(
-        onRefresh: getAllFood,
-        child: FutureBuilder(
-            future: _loadFoodFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (items.isNotEmpty) {
-                  return GridView.builder(
-                    itemCount: items.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1,
-                      crossAxisSpacing: 5,
+      Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SearchAnchor.bar(
+              searchController: _searchController,
+              suggestionsBuilder: (context, controller) {
+                final String input = controller.value.text;
+
+                final List<String> listNameFood = List.generate(
+                    items.length, (index) => items[index]['name']);
+
+                // Lọc danh sách dựa trên đầu vào của người dùng
+                final List<String> suggestions = listNameFood
+                    .where((element) =>
+                        element.toLowerCase().contains(input.toLowerCase()))
+                    .toList();
+                // Hiển thị danh sách gợi ý
+                return suggestions.map((element) {
+                  final food =
+                      items.firstWhere((item) => item['name'] == element);
+                  return Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: ListTile(
+                      leading: SizedBox(
+                        height: 40,
+                        width: 40,
+                        child: ClipRRect(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          child: CachedNetworkImage(
+                            imageUrl: food['imageUrl'],
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      title: Text(food['name']),
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Scaffold(
+                                appBar: AppBar(
+                                  title: Text(food['name']),
+                                ),
+                                body: Center(
+                                  child: CachedNetworkImage(
+                                    imageUrl: food['imageUrl'],
+                                    placeholder: (context, url) =>
+                                        const CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ))));
+
+                        controller.clear();
+                      },
                     ),
-                    itemBuilder: (context, index) {
-                      final item = items[index];
-                      return GridtitleView(
-                        id: item['id'],
-                        name: item['name'],
-                        price: item['price'].toString(),
-                        imageUrl: item['imageUrl'],
-                        databaseReference: databaseReference,
-                      );
-                    },
                   );
-                } else {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "Vui lòng kết nối mạng",
-                          style: TextStyle(
-                              backgroundColor: Colors.black54,
-                              color: Colors.white),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const CircularProgressIndicator(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                getAllFood();
-                              });
-                            },
-                            child: const Text("Làm mới")),
-                      ],
-                    ),
-                  );
-                }
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            }),
+                }).toList();
+              },
+            ),
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: getAllFood,
+              child: FutureBuilder(
+                  future: _loadFoodFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (items.isNotEmpty) {
+                        return GridView.builder(
+                          itemCount: items.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 1,
+                            crossAxisSpacing: 5,
+                          ),
+                          itemBuilder: (context, index) {
+                            final item = items[index];
+                            return GridtitleView(
+                              id: item['id'],
+                              name: item['name'],
+                              price: item['price'].toString(),
+                              imageUrl: item['imageUrl'],
+                              databaseReference: databaseReference,
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Vui lòng kết nối mạng",
+                                style: TextStyle(
+                                    backgroundColor: Colors.black54,
+                                    color: Colors.white),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const CircularProgressIndicator(),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      getAllFood();
+                                    });
+                                  },
+                                  child: const Text("Làm mới")),
+                            ],
+                          ),
+                        );
+                      }
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  }),
+            ),
+          ),
+        ],
       ),
     ]));
   }
