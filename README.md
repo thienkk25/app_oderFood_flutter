@@ -12,7 +12,7 @@
 3. Cài đặt thư viện cần thiết
 
   - **Cách 1**
-    - Thêm các thư viện vào tệp pubspec.yaml:
+    - Thêm các thư viện vào tệp pubspec.yaml (nếu chưa có):
       - firebase_core: ^3.8.0
       - firebase_auth: ^5.3.3
       - cloud_firestore: ^5.5.0
@@ -23,7 +23,7 @@
         ```
 
   - **Cách 2**
-    - Thêm thư viện bằng lệch terminal:
+    - Thêm thư viện bằng lệch terminal (nếu chưa có):
       - ```bash
         flutter pub add firebase_core
         flutter pub add firebase_auth
@@ -37,7 +37,7 @@
         ```
 
   - **Chú ý**
-    - Trong file tệp pubspec.yaml thêm:
+    - Trong file tệp pubspec.yaml thêm (nếu chưa có):
       ```yaml
         flutter:
           ...
@@ -70,10 +70,6 @@
 
   - !["Kết quả bằng hình ảnh"](assets/result_app/kq3.png)
 
-  - <video width="640" height="360" controls>
-      <source src="https://res.cloudinary.com/dksr7si4o/video/upload/v1734433223/flutter/video_kq/KetQua_gfhnxs.mp4" type="video/mp4">
-      Trình duyệt của bạn không hỗ trợ thẻ video.
-    </video>
   - [Link video](https://res.cloudinary.com/dksr7si4o/video/upload/v1734433223/flutter/video_kq/KetQua_gfhnxs.mp4)
 
 **Note:** Sản phẩm vẫn đang qua trình phát triển
