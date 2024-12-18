@@ -182,7 +182,7 @@ class _SignInState extends State<SignIn> {
                                                 const Forgot()));
                                   },
                                   child: const Text(
-                                    "Forgot",
+                                    "Quên mật khẩu",
                                     style: TextStyle(
                                         decoration: TextDecoration.underline),
                                   )),
