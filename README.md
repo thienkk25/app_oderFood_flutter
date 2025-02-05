@@ -76,4 +76,4 @@
 
   - [Link video](https://res.cloudinary.com/dksr7si4o/video/upload/v1734433223/flutter/video_kq/KetQua_gfhnxs.mp4)
 
-**Note:** Sản phẩm vẫn đang qua trình phát triển
+**Note:** Sản phẩm dành cho học tập
